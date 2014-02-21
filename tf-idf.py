@@ -6,7 +6,7 @@ from math import log
 from __future__ import division
 
 # (Max) number of the most important terms
-T = 5 
+T = 5
 
 # Read IDF data
 
@@ -16,8 +16,10 @@ with open('idf.csv', 'r') as idf_data:
     for row in reader:
         raw_idf[int(row[0])] = int(row[1])
 
+
 # A function to compute TF-IDF
 # http://en.wikipedia.org/wiki/Tf%E2%80%93idf
+
 
 def compute_ifidf(terms, num_documents, max_raw_frequency):
 
@@ -31,8 +33,8 @@ def compute_ifidf(terms, num_documents, max_raw_frequency):
 
 
 # For each document:
-# 1) Compute TF-IDF 
-# 2) Write down T most important terms 
+# 1) Compute TF-IDF
+# 2) Write down T most important terms
 #    into a separate file (tf-idf.csv)
 
 with open('train-sk-min.csv', 'r') as input_file:
@@ -44,7 +46,7 @@ with open('train-sk-min.csv', 'r') as input_file:
         for document in input_file:
 
             terms = [item.split(':') for item in document.split() if item.find(':') >= 0]
-            terms = [[int(item[0]), int(item[1])] for item in terms]
+            terms = [[int(term), int(frequency)] for term, frequency in terms]
 
             max_raw_frequency = 0
             for term, frequency in terms:
@@ -52,10 +54,7 @@ with open('train-sk-min.csv', 'r') as input_file:
                     max_raw_frequency = frequency
 
             tf_idf = compute_ifidf(terms, num_documents, max_raw_frequency)
-            
-            sorted_keys_ascending = sorted(tf_idf, key = tf_idf.get)
+
+            sorted_keys_ascending = sorted(tf_idf, key=tf_idf.get)
             # T_most_important_terms = sorted_keys_ascending[-T:]
-            # ... stopped here 
-
-
-
+            # ... stopped here
