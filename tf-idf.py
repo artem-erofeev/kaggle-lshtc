@@ -1,5 +1,18 @@
 # Extract the most important terms from each document
 
+# This script generates tf-idf.csv, 
+# where each document from {INPUT_FILE} 
+# is represented with {TERMS_NEEDED} most important terms.
+
+# Structure of tf-idf.csv:
+#     - each line is a document, 
+#       for example "335416,416827 57:3.5 70:3.0 71:2.5 72:1.5 81:1.5"
+#     - in this case:
+#             "335416,416827" is the target class of the document 
+#                             (copied from INPUT_FILE)
+#             "57:3.5" means that 
+#                             term 57 has TF-IDF equal to 3.5
+
 
 from __future__ import division
 import csv
@@ -27,15 +40,15 @@ def compute_ifidf(terms, num_documents, raw_idf, max_raw_frequency):
 
 
 def max_raw_frequency(terms):
-     """ terms = [['a', 5], ['b', 7], ['c', 3]]
-         maximum_raw_frequency(terms) => returns 7
-     """
-     max = 0
-     for term, frequency in terms:
+    """ terms = [['a', 5], ['b', 7], ['c', 3]]
+        maximum_raw_frequency(terms) => returns 7
+    """
+    max = 0
+    for term, frequency in terms:
         if frequency > max:
-             max = frequency
+            max = frequency
 
-     return max
+    return max
 
 
 def extract_terms(document):
@@ -75,8 +88,10 @@ with open('idf.csv', 'r') as idf_data:
 
 
 # Number of documents in the input file
-from subprocess import check_output
-num_documents = int(check_output(['wc', '-l', INPUT_FILE]).split()[0])
+num_documents = 0
+with open(INPUT_FILE) as f:
+    for line in f:
+       num_documents += 1
 
 
 # For each document:
