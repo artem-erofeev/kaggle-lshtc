@@ -32,6 +32,18 @@ def compute_ifidf(terms, num_documents, max_raw_frequency):
     return tf_idf
 
 
+def max_raw_frequency(terms):
+     """ terms = [['a', 5], ['b', 7], ['c', 3]]
+         maximum_raw_frequency(terms) => returns 7
+     """
+     max = 0
+     for term, frequency in terms:
+        if frequency > max:
+             max = frequency
+
+     return max
+
+
 # For each document:
 # 1) Compute TF-IDF
 # 2) Write down T most important terms
@@ -48,12 +60,7 @@ with open('train-sk-min.csv', 'r') as input_file:
             terms = [item.split(':') for item in document.split() if item.find(':') >= 0]
             terms = [[int(term), int(frequency)] for term, frequency in terms]
 
-            max_raw_frequency = 0
-            for term, frequency in terms:
-                if frequency > max_raw_frequency:
-                    max_raw_frequency = frequency
-
-            tf_idf = compute_ifidf(terms, num_documents, max_raw_frequency)
+            tf_idf = compute_ifidf(terms, num_documents, max_raw_frequency(terms))
 
             sorted_keys_ascending = sorted(tf_idf, key=tf_idf.get)
             # T_most_important_terms = sorted_keys_ascending[-T:]
