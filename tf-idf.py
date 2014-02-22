@@ -1,16 +1,16 @@
 # Extract the most important terms from each document
 
-# This script generates tf-idf.csv, 
-# where each document from {INPUT_FILE} 
+# This script generates tf-idf.csv,
+# where each document from {INPUT_FILE}
 # is represented with {TERMS_NEEDED} most important terms.
 
 # Structure of tf-idf.csv:
-#     - each line is a document, 
+#     - each line is a document,
 #       for example "335416,416827 57:3.5 70:3.0 71:2.5 72:1.5 81:1.5"
 #     - in this case:
-#             "335416,416827" is the target class of the document 
+#             "335416,416827" is the target class of the document
 #                             (copied from INPUT_FILE)
-#             "57:3.5" means that 
+#             "57:3.5" means that
 #                             term 57 has TF-IDF equal to 3.5
 
 
@@ -87,11 +87,12 @@ with open('idf.csv', 'r') as idf_data:
         raw_idf[int(row[0])] = int(row[1])
 
 
-# Number of documents in the input file
+# Count number of documents in the input file
+
 num_documents = 0
 with open(INPUT_FILE) as f:
     for line in f:
-       num_documents += 1
+        num_documents += 1
 
 
 # For each document:
