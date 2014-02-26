@@ -35,10 +35,3 @@ def compose(classes, features, values):
     features_and_values = ' '.join([str(features[i]) + ":" + str(values[i]) for i in range(len(features))])
     return ' '.join([classes, features_and_values])
 
-
-# Count unique features
-
-# with open(INPUT_FILE, 'r') as input_file:
-
-#    for document in input_file:
-#        classes, features, values = parse(document)
